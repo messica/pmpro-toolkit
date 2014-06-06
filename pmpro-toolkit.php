@@ -3,42 +3,25 @@
 /**
  * Plugin Name: PMPro Developer's Toolkit
  * Author: Stranger Studios
- * Description: Various tools to test and debug Paid Memberships Pro enabled websites.
+ * Description: Adds various tools and settings to aid in the development of Paid Memberships Pro enabled websites.
  * Version: .1
  */
 
 /*
- * Globals
- */
-global $pmprodev_options, $gateway;
-
-/*
  * Default Options
- */
-$pmprodev_options = get_option('pmprodev_options');
-//if(empty($pmprodev_options)) {
-//    $pmprodev_options = array(
-//        'ipn_debug' => 0,
-//        'authnet_silent_post_debug' => 0,
-//        'stripe_webhook_debug' => 0,
-//        'ins_debug' => 0,
-//        'debug_email' => 0,
-//        'redirect_email' => 0,
-//        'checkout_debug_email' => 0,
-//    );
-//    update_option('pmprodev_options', $pmprodev_options);
-//}
-if(empty($pmprodev_options)) {
-    $pmprodev_options = array(
-        'ipn_debug' => 'paidmembershipsprotest+ipn_debug@gmail.com',
-        'authnet_silent_post_debug' => 'paidmembershipsprotest+authnet_silent_post_debug@gmail.com',
-        'stripe_webhook_debug' => 'paidmembershipsprotest+stripe_webhook_debug@gmail.com',
-        'ins_debug' => 'paidmembershipsprotest+ins_debug@gmail.com',
-        'redirect_email' => 'paidmembershipsprotest+redirecct_email@gmail.com',
-        'checkout_debug_email' => 'paidmembershipsprotest+checkout_debug_email@gmail.com',
-    );
-    update_option('pmprodev_options', $pmprodev_options);
-}
+ * Copy to your own functions.php or customizations plugin, uncomment, and modify as necessary
+
+global $pmprodev_options
+$pmprodev_options = array(
+    'ipn_debug'                 => 'example@domain.com',
+    'authnet_silent_post_debug' => 'example@domain.com',
+    'stripe_webhook_debug'      => 'example@domain.com',
+    'ins_debug'                 => 'example@domain.com',
+    'redirect_email'            => 'example@domain.com',
+    'checkout_debug_email'      => 'example@domain.com',
+);
+
+* /
 
 /*
  * Debug Constants
@@ -60,6 +43,8 @@ function pmprodev_init() {
         define('PMPRO_INS_DEBUG', $pmprodev_options['ins_debug']);
 
 }
+add_action('init', 'pmprodev_init');
+
 
 /*
  * Redirect PMPro Emails
@@ -73,6 +58,8 @@ function pmprodev_pmpro_email_recipient($recipient, $email) {
 
     return $recipient;
 }
+add_filter('pmpro_email_recipient', 'pmprodev_pmpro_email_recipient', 10, 2);
+
 
 /*
  * Send debug email every time checkout page is hit.
@@ -112,14 +99,4 @@ function pmprodev_pmpro_checkout_level($level) {
 
     return $level;
 }
-
-/*
- * Hooks
- */
-add_action('init', 'pmprodev_init');
-
-/*
- * Filters
- */
-add_filter('pmpro_email_recipient', 'pmprodev_pmpro_email_recipient', 10, 2);
 add_filter('pmpro_checkout_level', 'pmprodev_pmpro_checkout_level');
