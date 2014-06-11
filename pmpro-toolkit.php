@@ -28,20 +28,6 @@ $pmprodev_options = array(
 
 */
 
-//TESTING
-if(empty($pmprodev_options)) {
-    $pmprodev_options = array(
-        'ipn_debug' => 'paidmembershipsprotest+ipn_debug@gmail.com',
-        'authnet_silent_post_debug' => 'paidmembershipsprotest+authnet_silent_post_debug@gmail.com',
-        'stripe_webhook_debug' => 'paidmembershipsprotest+stripe_webhook_debug@gmail.com',
-        'ins_debug' => 'paidmembershipsprotest+ins_debug@gmail.com',
-        'redirect_email' => 'paidmembershipsprotest+redirecct_email@gmail.com',
-        'checkout_debug_email' => 'paidmembershipsprotest+checkout_debug_email@gmail.com',
-        'view_as_enabled' => true
-    );
-    update_option('pmprodev_options', $pmprodev_options);
-}
-
 /*
  * Gateway Debug Constants
  */
@@ -129,7 +115,12 @@ function pmprodev_view_as_init() {
     $membership_level_capability = apply_filters('pmpro_edit_member_capability', 'manage_options');
 
     if(!empty($view_as_level_ids) && !empty($pmprodev_options['view_as_enabled']) && current_user_can($membership_level_capability)) {
-        setcookie('pmprodev_view_as', $view_as_level_ids, null);
+
+        //are we resetting the filter?
+        if($view_as_level_ids == 'r')
+            setcookie('pmprodev_view_as', '', 0);
+        else
+            setcookie('pmprodev_view_as', $view_as_level_ids, null);
     }
 }
 add_action('init', 'pmprodev_view_as_init');
@@ -153,11 +144,13 @@ function pmprodev_view_as_access_filter($hasaccess, $post, $user, $levels) {
 
         foreach($view_as_level_ids as $id) {
 
+            //return true when we find a match
             if(in_array($id, $post_level_ids))
-                $hasaccess = true;
+                return true;
         }
     }
 
-    return $hasaccess;
+    //return false to override any real membership levels
+    return false;
 }
 add_filter('pmpro_has_membership_access_filter', 'pmprodev_view_as_access_filter', 10, 4);
