@@ -3,9 +3,14 @@
 /**
  * Plugin Name: PMPro Developer's Toolkit
  * Author: Stranger Studios
- * Description: Adds various tools and settings to aid in the development of Paid Memberships Pro enabled websites.
- * Version: .1
+ * Description: Various tools to test and debug Paid Memberships Pro enabled websites.
+ * Version: .1.1
  */
+
+/*
+ * Globals
+ */
+global $pmprodev_options, $gateway;
 
 /*
  * Default Options
@@ -21,12 +26,26 @@ $pmprodev_options = array(
     'checkout_debug_email'      => 'example@domain.com',
 );
 
-* /
+*/
+
+//TESTING
+if(empty($pmprodev_options)) {
+    $pmprodev_options = array(
+        'ipn_debug' => 'paidmembershipsprotest+ipn_debug@gmail.com',
+        'authnet_silent_post_debug' => 'paidmembershipsprotest+authnet_silent_post_debug@gmail.com',
+        'stripe_webhook_debug' => 'paidmembershipsprotest+stripe_webhook_debug@gmail.com',
+        'ins_debug' => 'paidmembershipsprotest+ins_debug@gmail.com',
+        'redirect_email' => 'paidmembershipsprotest+redirecct_email@gmail.com',
+        'checkout_debug_email' => 'paidmembershipsprotest+checkout_debug_email@gmail.com',
+        'view_as_enabled' => true
+    );
+    update_option('pmprodev_options', $pmprodev_options);
+}
 
 /*
- * Debug Constants
+ * Gateway Debug Constants
  */
-function pmprodev_init() {
+function pmprodev_gateway_debug_setup() {
 
     global $pmprodev_options;
 
@@ -41,15 +60,13 @@ function pmprodev_init() {
 
     if(!empty($pmprodev_options['ins_debug']) && !defined('PMPRO_INS_DEBUG'))
         define('PMPRO_INS_DEBUG', $pmprodev_options['ins_debug']);
-
 }
-add_action('init', 'pmprodev_init');
-
+add_action('init', 'pmprodev_gateway_debug_setup');
 
 /*
  * Redirect PMPro Emails
  */
-function pmprodev_pmpro_email_recipient($recipient, $email) {
+function pmprodev_redirect_emails($recipient, $email) {
 
     global $pmprodev_options;
 
@@ -58,13 +75,12 @@ function pmprodev_pmpro_email_recipient($recipient, $email) {
 
     return $recipient;
 }
-add_filter('pmpro_email_recipient', 'pmprodev_pmpro_email_recipient', 10, 2);
-
+add_filter('pmpro_email_recipient', 'pmprodev_redirect_emails', 10, 2);
 
 /*
  * Send debug email every time checkout page is hit.
  */
-function pmprodev_pmpro_checkout_level($level) {
+function pmprodev_checkout_debug_email($level) {
 
     global $pmprodev_options, $current_user, $wpdb;
 
@@ -78,7 +94,7 @@ function pmprodev_pmpro_checkout_level($level) {
     else
         $http = 'http://';
 
-    $email->subject = sprintf('%s Checkout Page Debug Information', get_bloginfo('name'));
+    $email->subject = sprintf('%s Checkout Page Debug Log', get_bloginfo('name'));
     $email->recipient = $pmprodev_options['checkout_debug_email'];
     $email->template = 'checkout_debug';
     $email->body = file_get_contents(plugin_dir_path(__FILE__) . '/email/checkout_debug.html');
@@ -99,4 +115,49 @@ function pmprodev_pmpro_checkout_level($level) {
 
     return $level;
 }
-add_filter('pmpro_checkout_level', 'pmprodev_pmpro_checkout_level');
+add_filter('pmpro_checkout_level', 'pmprodev_checkout_debug_email');
+
+/*
+ * View as specific Membership Level
+ */
+function pmprodev_view_as_init() {
+
+    global $current_user, $pmprodev_options;
+
+
+    $view_as_level_ids = $_REQUEST['pmprodev_view_as'];
+    $membership_level_capability = apply_filters('pmpro_edit_member_capability', 'manage_options');
+
+    if(!empty($view_as_level_ids) && !empty($pmprodev_options['view_as_enabled']) && current_user_can($membership_level_capability)) {
+        setcookie('pmprodev_view_as', $view_as_level_ids, null);
+    }
+}
+add_action('init', 'pmprodev_view_as_init');
+
+function pmprodev_view_as_access_filter($hasaccess, $post, $user, $levels) {
+
+    global $pmprodev_options;
+
+    $view_as_level_ids = $_COOKIE['pmprodev_view_as'];
+    $membership_level_capability = apply_filters('pmpro_edit_member_capability', 'manage_options');
+
+    if(isset($view_as_level_ids) && current_user_can($membership_level_capability)) {
+
+        //get level ids for this post
+        $post_level_ids = array();
+        foreach($levels as $key=>$level)
+            $post_level_ids[] = $level->id;
+
+        //get view as level ids from cookie
+        $view_as_level_ids = explode('-', $view_as_level_ids);
+
+        foreach($view_as_level_ids as $id) {
+
+            if(in_array($id, $post_level_ids))
+                $hasaccess = true;
+        }
+    }
+
+    return $hasaccess;
+}
+add_filter('pmpro_has_membership_access_filter', 'pmprodev_view_as_access_filter', 10, 4);

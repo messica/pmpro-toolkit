@@ -3,7 +3,7 @@ Contributors: strangerstudios, jessica o
 Tags: pmpro, debug, developer, toolkit
 Requires at least: 3.8
 Tested up to: 3.9.1
-Stable tag: .1
+Stable tag: .1.1
 
 Adds various tools and settings to aid in the development of Paid Memberships Pro enabled websites.
 
@@ -27,6 +27,9 @@ Features:
 Please post it in the issues section of GitHub and we'll fix it as soon as we can. Thanks for helping. https://github.com/strangerstudios/pmpro-toolkit/issues
 
 == Changelog ==
+
+= .1.1 =
+* Added "View as" access filter. Lets admins view any page as a particular membership level. Add "?pmprodev_view_as=3-2-1" to the query string.
 
 = .1 =
 * This is the initial version of the plugin.
