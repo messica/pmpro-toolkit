@@ -12,21 +12,7 @@
  */
 global $pmprodev_options, $gateway;
 
-/*
- * Default Options
- * Copy to your own functions.php or customizations plugin, uncomment, and modify as necessary
-
-global $pmprodev_options
-$pmprodev_options = array(
-    'ipn_debug'                 => 'example@domain.com',
-    'authnet_silent_post_debug' => 'example@domain.com',
-    'stripe_webhook_debug'      => 'example@domain.com',
-    'ins_debug'                 => 'example@domain.com',
-    'redirect_email'            => 'example@domain.com',
-    'checkout_debug_email'      => 'example@domain.com',
-);
-
-*/
+$pmprodev_options = get_option('pmprodev_options');
 
 /*
  * Gateway Debug Constants
@@ -98,6 +84,8 @@ function pmprodev_checkout_debug_email($level) {
 
     if(!empty($order))
         $email->data['order'] = print_r($order, true);
+
+    $email->sendEmail();
 
     return $level;
 }
@@ -190,3 +178,37 @@ function pmprodev_view_as_has_membership_level($return, $user_id, $levels) {
     }
 }
 add_filter('pmpro_has_membership_level', 'pmprodev_view_as_has_membership_level', 10, 3);
+
+/*
+ * Add settings page
+ */
+function pmprodev_admin_menu() {
+    add_options_page('PMPro Toolkit Settings', 'PMPro Toolkit', apply_filters('pmpro_edit_member_capability', 'manage_options'), 'pmprodev', 'pmprodev_settings_page');
+}
+add_action('admin_menu', 'pmprodev_admin_menu');
+
+function pmprodev_admin_init() {
+
+    //register setting
+    register_setting('pmprodev_options', 'pmprodev_options');
+
+    //add settings sections
+    add_settings_section('pmprodev-gateway', 'Gateway/Checkout Debugging', 'pmprodev_gateway_settings', 'pmprodev');
+    add_settings_section('pmprodev-email', 'Email Debugging', 'pmprodev_email_settings', 'pmprodev');
+    add_settings_section('pmprodev-view-as', '"View as..."', 'pmprodev_view_as_settings', 'pmprodev');
+
+    //add settings fields
+    add_settings_field('ipn-debug', 'PayPal IPN Debug Eamil', 'pmprodev_settings_ipn_debug', 'pmprodev', 'pmprodev-gateway');
+    add_settings_field('authnet_silent_post_debug', 'Authorize.net Silent Post Debug Eamil', 'pmprodev_settings_authnet_silent_post_debug', 'pmprodev', 'pmprodev-gateway');
+    add_settings_field('stripe_webhook_debug', 'Stripe Webhook Debug Eamil', 'pmprodev_settings_stripe_webhook_debug', 'pmprodev', 'pmprodev-gateway');
+    add_settings_field('ins_debug', '2Checkout INS Debug Eamil', 'pmprodev_settings_ins_debug', 'pmprodev', 'pmprodev-gateway');
+    add_settings_field('redirect_email', 'Redirect PMPro Emails', 'pmprodev_settings_redirect_email', 'pmprodev', 'pmprodev-email');
+    add_settings_field('checkout_debug_email', 'Send Checkout Debug Email', 'pmprodev_settings_checkout_debug_email', 'pmprodev', 'pmprodev-gateway');
+    add_settings_field('view_as_enabled', 'Enable "View As" feature', 'pmprodev_settings_view_as_enabled', 'pmprodev', 'pmprodev-view-as');
+
+}
+add_action('admin_init', 'pmprodev_admin_init');
+
+function pmprodev_settings_page() {
+    require_once(plugin_dir_path(__FILE__) . '/adminpages/settings.php');
+}
