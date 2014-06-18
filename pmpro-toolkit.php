@@ -4,7 +4,7 @@
  * Plugin Name: PMPro Developer's Toolkit
  * Author: Stranger Studios
  * Description: Various tools to test and debug Paid Memberships Pro enabled websites.
- * Version: .1.1
+ * Version: .1.2
  */
 
 /*
@@ -13,6 +13,17 @@
 global $pmprodev_options, $gateway;
 
 $pmprodev_options = get_option('pmprodev_options');
+if(empty($pmprodev_options)) {
+    $pmprodev_options = array(
+        'ipn_debug' => '',
+        'authnet_silent_post_debug' => '',
+        'stripe_webhook_debug' => '',
+        'ins_debug' => '',
+        'redirect_email' => '',
+        'checkout_debug_email' => '',
+        'view_as_enabled' => false
+    );
+}
 
 /*
  * Gateway Debug Constants
@@ -100,7 +111,9 @@ function pmprodev_view_as_init() {
 
     global $current_user, $pmprodev_options;
 
-    $view_as_level_ids = $_REQUEST['pmprodev_view_as'];
+    if(!empty($_REQUEST['pmprodev_view_as']))
+        $view_as_level_ids = $_REQUEST['pmprodev_view_as'];
+
     $membership_level_capability = apply_filters('pmpro_edit_member_capability', 'manage_options');
 
     if(!empty($view_as_level_ids) && !empty($pmprodev_options['view_as_enabled']) && current_user_can($membership_level_capability)) {

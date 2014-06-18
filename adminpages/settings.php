@@ -15,7 +15,7 @@ function pmprodev_view_as_settings() {
     $level = $wpdb->get_row('SELECT * FROM ' . $wpdb->pmpro_membership_levels . ' LIMIT 1');
     $level_name = $level->name;
     $level_id = $level->id;
-    $example_link = '<a href="' . add_query_arg('pmprodev_view_as', $level_id, get_bloginfo('siteurl')) . '">' . add_query_arg('pmprodev_view_as', $level_id, get_bloginfo('siteurl')) . '</a>';
+    $example_link = '<a href="' . add_query_arg('pmprodev_view_as', $level_id, home_url()) . '">' . add_query_arg('pmprodev_view_as', $level_id, home_url()) . '</a>';
     ?>
     <p>
         Enabling "View as..." will allow admins to view any page as if they had any membership level(s) for a brief period of time.<br>
