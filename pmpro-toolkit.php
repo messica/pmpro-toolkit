@@ -106,10 +106,11 @@ add_filter('pmpro_checkout_level', 'pmprodev_checkout_debug_email');
 /*
  * View as specific Membership Level
  */
+
+//create cookie based on query string parameters
 function pmprodev_view_as_init() {
 
     global $current_user, $pmprodev_options;
-
 
     $view_as_level_ids = $_REQUEST['pmprodev_view_as'];
     $membership_level_capability = apply_filters('pmpro_edit_member_capability', 'manage_options');
@@ -125,6 +126,7 @@ function pmprodev_view_as_init() {
 }
 add_action('init', 'pmprodev_view_as_init');
 
+//override pmpro_has_membership_access
 function pmprodev_view_as_access_filter($hasaccess, $post, $user, $levels) {
 
     global $pmprodev_options;
@@ -133,6 +135,9 @@ function pmprodev_view_as_access_filter($hasaccess, $post, $user, $levels) {
     $membership_level_capability = apply_filters('pmpro_edit_member_capability', 'manage_options');
 
     if(isset($view_as_level_ids) && current_user_can($membership_level_capability)) {
+
+        //default to false to override any real membership levels
+        $hasaccess = false;
 
         //get level ids for this post
         $post_level_ids = array();
@@ -143,14 +148,45 @@ function pmprodev_view_as_access_filter($hasaccess, $post, $user, $levels) {
         $view_as_level_ids = explode('-', $view_as_level_ids);
 
         foreach($view_as_level_ids as $id) {
-
             //return true when we find a match
             if(in_array($id, $post_level_ids))
-                return true;
+                $hasaccess = true;
         }
     }
 
-    //return false to override any real membership levels
-    return false;
+    return $hasaccess;
 }
 add_filter('pmpro_has_membership_access_filter', 'pmprodev_view_as_access_filter', 10, 4);
+
+//override pmpro_hasMembershipLevel() function
+//TODO: figure out why this is running before cookie is set...
+function pmprodev_view_as_has_membership_level($return, $user_id, $levels) {
+
+    global $pmprodev_options;
+
+    $view_as_level_ids = $_COOKIE['pmprodev_view_as'];
+    $membership_level_capability = apply_filters('pmpro_edit_member_capability', 'manage_options');
+
+    if(isset($view_as_level_ids) && current_user_can($membership_level_capability)) {
+
+        //if we're checking for "0"
+        if($levels == '0' && $view_as_level_ids == 'n')
+            return true;
+
+        //make levels array if it's not already
+        if(!is_array($levels))
+            $levels = array($levels);
+
+        //get view as level ids from cookie
+        $view_as_level_ids = explode('-', $view_as_level_ids);
+
+        foreach($view_as_level_ids as $id) {
+            if(in_array($id, $levels))
+                return true;
+        }
+
+        //default to false to overrdide real levels
+        return false;
+    }
+}
+add_filter('pmpro_has_membership_level', 'pmprodev_view_as_has_membership_level', 10, 3);
