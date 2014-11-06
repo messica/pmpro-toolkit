@@ -62,18 +62,21 @@ function pmprodev_settings_cron_expire_memberships() {
     global $pmprodev_options;
     ?>
     <input id="expire_memberships" type="checkbox"  name="pmprodev_options[expire_memberships]" value="1" <?php if(!empty($pmprodev_options['expire_memberships'])) echo 'checked="true"'; ?>>
+	<p class="description">Check to disable.</p>
     <?php
 }
 function pmprodev_settings_cron_expiration_warnings() {
     global $pmprodev_options;
     ?>
     <input id="expiration_warnings" type="checkbox"  name="pmprodev_options[expiration_warnings]" value="1" <?php if(!empty($pmprodev_options['expiration_warnings'])) echo 'checked="true"'; ?>>
+	<p class="description">Check to disable.</p>
     <?php
 }
 function pmprodev_settings_cron_credit_card_expiring() {
     global $pmprodev_options;
     ?>
     <input id="credit_card_expiring" type="checkbox"  name="pmprodev_options[credit_card_expiring]" value="1" <?php if(!empty($pmprodev_options['credit_card_expiring'])) echo 'checked="true"'; ?>>
+	<p class="description">Check to disable.</p>
     <?php
 }
 
