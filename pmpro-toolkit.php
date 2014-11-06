@@ -141,7 +141,11 @@ function pmprodev_view_as_access_filter($hasaccess, $post, $user, $levels) {
 
     global $pmprodev_options;
 
-    $view_as_level_ids = $_COOKIE['pmprodev_view_as'];
+	if(!empty($_COOKIE['pmprodev_view_as']))
+		$view_as_level_ids = $_COOKIE['pmprodev_view_as'];
+	else
+		$view_as_level_ids = NULL;   
+   
     $membership_level_capability = apply_filters('pmpro_edit_member_capability', 'manage_options');
 
     if(isset($view_as_level_ids) && current_user_can($membership_level_capability)) {
