@@ -3,12 +3,26 @@
 /*
  * Display Settings Sections
  */
+function pmprodev_email_settings() {
+?>
+<style>
+	h2, table.form-table {border-bottom: 1px solid #ddd; margin-bottom: 2em;}
+</style>
+<?php
+}
+
 function pmprodev_gateway_settings() {
     ?>
     <p>Enable debugging for PayPal IPNs, Authorize.net Silent Posts, Stripe Webhook, etc.<br>Enter the email address you would like the logs to be emailed to, or leave blank to disable.</p>
     <?php
 }
-function pmprodev_email_settings() {}
+
+function pmprodev_cron_settings() {
+    ?>
+    <p>Disable scheduled scripts that run daily via WP CRON.</p>
+    <?php
+}
+
 function pmprodev_view_as_settings() {
     global $wpdb;
     //get example level info
@@ -34,39 +48,6 @@ function pmprodev_view_as_settings() {
  * Display Settings Fields
  */
 
-//gateway debugging
-function pmprodev_settings_ipn_debug() {
-    global $pmprodev_options;
-    ?>
-    <input type="text"  name="pmprodev_options[ipn_debug]" value="<?php echo $pmprodev_options['ipn_debug']; ?>">
-    <?php
-}
-function pmprodev_settings_authnet_silent_post_debug() {
-    global $pmprodev_options;
-    ?>
-    <input type="text"  name="pmprodev_options[authnet_silent_post_debug]" value="<?php echo $pmprodev_options['authnet_silent_post_debug']; ?>">
-    <?php
-}
-function pmprodev_settings_stripe_webhook_debug() {
-    global $pmprodev_options;
-    ?>
-    <input type="text"  name="pmprodev_options[stripe_webhook_debug]" value="<?php echo $pmprodev_options['stripe_webhook_debug']; ?>">
-    <?php
-}
-function pmprodev_settings_ins_debug() {
-    global $pmprodev_options;
-    ?>
-    <input type="text"  name="pmprodev_options[ins_debug]" value="<?php echo $pmprodev_options['ins_debug']; ?>">
-    <?php
-}
-function pmprodev_settings_checkout_debug_email() {
-    global $pmprodev_options;
-    ?>
-    <input type="text"  name="pmprodev_options[checkout_debug_email]" value="<?php echo $pmprodev_options['checkout_debug_email']; ?>">
-    <p class="description">Send an email every time the Checkout page is hit.<br>This email will contain data about the request, user, membership level, order, and other information.</p>
-<?php
-}
-
 //redirect emails
 function pmprodev_settings_redirect_email() {
     global $pmprodev_options;
@@ -75,11 +56,47 @@ function pmprodev_settings_redirect_email() {
     <p class="description">Redirect all Paid Memberships Pro emails to a specific address.</p>
 <?php
 }
+
+//cron debugging
+function pmprodev_settings_cron_expire_memberships() {
+    global $pmprodev_options;
+    ?>
+    <input id="expire_memberships" type="checkbox"  name="pmprodev_options[expire_memberships]" value="1" <?php if(!empty($pmprodev_options['expire_memberships'])) echo 'checked="true"'; ?>>
+    <?php
+}
+function pmprodev_settings_cron_expiration_warnings() {
+    global $pmprodev_options;
+    ?>
+    <input id="expiration_warnings" type="checkbox"  name="pmprodev_options[expiration_warnings]" value="1" <?php if(!empty($pmprodev_options['expiration_warnings'])) echo 'checked="true"'; ?>>
+    <?php
+}
+function pmprodev_settings_cron_credit_card_expiring() {
+    global $pmprodev_options;
+    ?>
+    <input id="credit_card_expiring" type="checkbox"  name="pmprodev_options[credit_card_expiring]" value="1" <?php if(!empty($pmprodev_options['credit_card_expiring'])) echo 'checked="true"'; ?>>
+    <?php
+}
+
+//gateway debugging
+function pmprodev_settings_ipn_debug() {
+    global $pmprodev_options;
+    ?>
+    <input type="text"  name="pmprodev_options[ipn_debug]" value="<?php echo $pmprodev_options['ipn_debug']; ?>">
+    <?php
+}
+
+function pmprodev_settings_checkout_debug_email() {
+    global $pmprodev_options;
+    ?>
+    <input type="text"  name="pmprodev_options[checkout_debug_email]" value="<?php echo $pmprodev_options['checkout_debug_email']; ?>">
+    <p class="description">Send an email every time the Checkout page is hit.<br>This email will contain data about the request, user, membership level, order, and other information.</p>
+<?php
+}
+
 function pmprodev_settings_view_as_enabled() {
     global $pmprodev_options;
     ?>
-    <input id="view_as_enabled" type="checkbox"  name="pmprodev_options[view_as_enabled]" value="1"
-        <?php if(!empty($pmprodev_options['view_as_enabled'])) echo 'checked="true"'; ?>>
+    <input id="view_as_enabled" type="checkbox"  name="pmprodev_options[view_as_enabled]" value="1" <?php if(!empty($pmprodev_options['view_as_enabled'])) echo 'checked="true"'; ?>>
     <?php
 }
 

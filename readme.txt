@@ -2,8 +2,8 @@
 Contributors: strangerstudios, jessica o
 Tags: pmpro, debug, developer, toolkit
 Requires at least: 3.8
-Tested up to: 3.9.1
-Stable tag: .1.2
+Tested up to: 4.0
+Stable tag: .2
 
 Adds various tools and settings to aid in the development of Paid Memberships Pro enabled websites.
 
@@ -11,9 +11,10 @@ Adds various tools and settings to aid in the development of Paid Memberships Pr
 
 Features:
 
-* Define payment gateway debug constants easily in one place.
 * Redirect all PMPro emails to a specific email address.
+* Define payment gateway debug constants easily in one place.
 * Enable a Checkout Debug Email every time the Checkout Page is hit.
+* Disable PMPro's scheduled cron jobs.
 * Enable a "View as" feature allowing admins to view any page as a specific membership level or levels.
 
 == Installation ==
@@ -28,6 +29,11 @@ Features:
 Please post it in the issues section of GitHub and we'll fix it as soon as we can. Thanks for helping. https://github.com/strangerstudios/pmpro-toolkit/issues
 
 == Changelog ==
+= .2 =
+* Added "Scheduled Cron Job Debugging" section to disable cron jobs.
+* Now only have one Gateway Callback Email setting "ipn_debug" that is used for all gateways.
+* Moved sections around a bit.
+
 = .1.2 =
 * Removed some warnings/notices.
 * Added settings page.
