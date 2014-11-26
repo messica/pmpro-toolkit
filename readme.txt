@@ -2,8 +2,8 @@
 Contributors: strangerstudios, jessica o
 Tags: pmpro, debug, developer, toolkit
 Requires at least: 3.8
-Tested up to: 4.0
-Stable tag: .2
+Tested up to: 4.0.1
+Stable tag: .2.1
 
 Adds various tools and settings to aid in the development of Paid Memberships Pro enabled websites.
 
@@ -29,6 +29,9 @@ Features:
 Please post it in the issues section of GitHub and we'll fix it as soon as we can. Thanks for helping. https://github.com/strangerstudios/pmpro-toolkit/issues
 
 == Changelog ==
+= .2.1 =
+* Fixed issue where pmprodev_view_as_has_membership_level() was making members seem like they don't have a membership level.
+
 = .2 =
 * Added "Scheduled Cron Job Debugging" section to disable cron jobs.
 * Now only have one Gateway Callback Email setting "ipn_debug" that is used for all gateways.

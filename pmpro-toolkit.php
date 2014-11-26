@@ -4,7 +4,7 @@
  * Plugin Name: PMPro Developer's Toolkit
  * Author: Stranger Studios
  * Description: Various tools to test and debug Paid Memberships Pro enabled websites.
- * Version: .2
+ * Version: .2.1
  */
 
 /*
@@ -206,6 +206,8 @@ function pmprodev_view_as_has_membership_level($return, $user_id, $levels) {
         //default to false to overrdide real levels
         return false;
     }
+	
+	return $return;
 }
 add_filter('pmpro_has_membership_level', 'pmprodev_view_as_has_membership_level', 10, 3);
 
