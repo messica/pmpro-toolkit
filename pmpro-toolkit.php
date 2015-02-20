@@ -4,7 +4,7 @@
  * Plugin Name: PMPro Developer's Toolkit
  * Author: Stranger Studios
  * Description: Various tools to test and debug Paid Memberships Pro enabled websites.
- * Version: .2.1
+ * Version: .3
  */
 
 /*
@@ -215,9 +215,15 @@ add_filter('pmpro_has_membership_level', 'pmprodev_view_as_has_membership_level'
  * Add settings page
  */
 function pmprodev_admin_menu() {
-    add_options_page('PMPro Toolkit Settings', 'PMPro Toolkit', apply_filters('pmpro_edit_member_capability', 'manage_options'), 'pmprodev', 'pmprodev_settings_page');
+    add_options_page('PMPro Toolkit Settings', 'PMPro Toolkit', apply_filters('pmpro_edit_member_capability', 'manage_options'), 'pmprodev', 'pmprodev_settings_page');	
+	add_management_page('PMPro Toolkit Scripts', 'PMPro Toolkit Scripts', 'manage_options', 'pmprodev-database-scripts', 'pmprodev_database_scripts_page');
 }
 add_action('admin_menu', 'pmprodev_admin_menu');
+
+function pmprodev_database_scripts_page()
+{
+	require_once(dirname(__FILE__) . "/adminpages/scripts.php");
+}
 
 function pmprodev_admin_init() {
 
@@ -229,7 +235,7 @@ function pmprodev_admin_init() {
 	add_settings_section('pmprodev-cron', 'Scheduled Cron Job Debugging', 'pmprodev_cron_settings', 'pmprodev');    
 	add_settings_section('pmprodev-gateway', 'Gateway/Checkout Debugging', 'pmprodev_gateway_settings', 'pmprodev');    
     add_settings_section('pmprodev-view-as', '"View as..."', 'pmprodev_view_as_settings', 'pmprodev');
-
+		
     //add settings fields
     add_settings_field('redirect_email', 'Redirect PMPro Emails', 'pmprodev_settings_redirect_email', 'pmprodev', 'pmprodev-email');    
 	
@@ -240,8 +246,7 @@ function pmprodev_admin_init() {
 	add_settings_field('ipn-debug', 'Gateway Callback Debug Email', 'pmprodev_settings_ipn_debug', 'pmprodev', 'pmprodev-gateway');   
     add_settings_field('checkout_debug_email', 'Send Checkout Debug Email', 'pmprodev_settings_checkout_debug_email', 'pmprodev', 'pmprodev-gateway');
 	
-    add_settings_field('view_as_enabled', 'Enable "View As" feature', 'pmprodev_settings_view_as_enabled', 'pmprodev', 'pmprodev-view-as');
-
+    add_settings_field('view_as_enabled', 'Enable "View As" feature', 'pmprodev_settings_view_as_enabled', 'pmprodev', 'pmprodev-view-as');		
 }
 add_action('admin_init', 'pmprodev_admin_init');
 
