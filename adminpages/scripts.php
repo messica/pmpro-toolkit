@@ -88,7 +88,8 @@
 			
 			//orders
 			$new_transaction_id = "SCRUBBED-" . $count;
-			$wpdb->query("UPDATE $wpdb->pmpro_membership_orders SET payment_transaction_id = '" . $new_transaction_id . "', subscription_transaction_id = '" . $new_transaction_id . "' WHERE user_id = '" . $user_id . "'");
+			$wpdb->query("UPDATE $wpdb->pmpro_membership_orders SET payment_transaction_id = '" . $new_transaction_id . "' WHERE user_id = '" . $user_id . "' AND payment_transaction_id <> '' ");
+			$wpdb->query("UPDATE $wpdb->pmpro_membership_orders SET subscription_transaction_id = '" . $new_transaction_id . "' WHERE user_id = '" . $user_id . "' AND subscription_transaction_id <> '' ");
 			
 			//braintree customer ids
 			update_user_meta($user_id, "pmpro_braintree_customerid", $new_transaction_id);
