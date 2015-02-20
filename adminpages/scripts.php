@@ -95,7 +95,7 @@
 			update_user_meta($user_id, "pmpro_braintree_customerid", $new_transaction_id);
 			update_user_meta($user_id, "pmpro_stripe_customerid", $new_transaction_id);
 			
-			echo ".";
+			echo ". ";
 		}
 		
 		echo "</p>";
