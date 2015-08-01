@@ -1,9 +1,9 @@
-=== PMPro Developer's Toolkit ===
+=== Paid Memberships Pro - Developer's Toolkit Add On ===
 Contributors: strangerstudios, jessica o
-Tags: pmpro, debug, developer, toolkit
+Tags: paid memberships pro, pmpro, debug, developer, toolkit
 Requires at least: 3.8
-Tested up to: 4.1.1
-Stable tag: .3
+Tested up to: 4.2.3
+Stable tag: .4
 
 Adds various tools and settings to aid in the development of Paid Memberships Pro enabled websites.
 
@@ -29,6 +29,11 @@ Features:
 Please post it in the issues section of GitHub and we'll fix it as soon as we can. Thanks for helping. https://github.com/strangerstudios/pmpro-toolkit/issues
 
 == Changelog ==
+= .4 =
+* Added script to change members from one level to another.
+* Added script to cancel all members of one level.
+* Added script to copy page restrictions from one level to another.
+
 = .3 =
 * Added scripts to delete data from the database. (Use at your own risk!)
 
