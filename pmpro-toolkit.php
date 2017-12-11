@@ -92,7 +92,7 @@ function pmprodev_checkout_debug_email($level) {
     $email->data = array(
         'sitename' => get_bloginfo('sitename'),
         'checkout_url' => $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
-        'submit' => print_r($_REQUEST['submit-checkout'], true),
+        'submit' => (empty($_REQUEST['submit=checkout']) ? 'no' : 'yes'),
         'level' => print_r($level, true),
         'user' => print_r($current_user->data, true),
         'request' => print_r($_REQUEST, true)
