@@ -6,8 +6,7 @@
 	$pmprodev_member_tables = array(
 		$wpdb->pmpro_memberships_users,
 		$wpdb->pmpro_membership_orders,
-		$wpdb->pmpro_discount_codes_uses,
-		$wpdb->pmpro_memberships_users
+		$wpdb->pmpro_discount_codes_uses		
 	);
 
 	$pmprodev_other_tables = array(
