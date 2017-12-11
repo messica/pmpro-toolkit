@@ -43,12 +43,17 @@
 		$clean_pmpro_options = true;
 	else
 		$clean_pmpro_options = false;
-	
+		
 	if(!empty($_POST['move_level']))
 		$move_level = true;
 	else
 		$move_level = false;
 
+	if(!empty($_POST['give_level']))
+		$give_level = true;
+	else
+		$give_level = false;
+		
 	if(!empty($_POST['cancel_level']))
 		$cancel_level = true;
 	else
@@ -182,6 +187,34 @@
 		}
 	}
 
+	if($give_level) {
+		$give_level_id = intval($_REQUEST['give_level_id']);
+		$give_level_startdate = preg_replace('/^0-9\-/', '', $_REQUEST['give_level_startdate']);
+		$give_level_enddate = preg_replace('/^0-9\-/', '', $_REQUEST['give_level_enddate']);
+				
+		if(empty($give_level_id) || empty($give_level_startdate) || empty($give_level_enddate)) {
+			echo "<hr /><p><strong>Please enter a level ID, start date, and end date.</strong></p>";
+		} else {
+			$sqlQuery = "INSERT INTO {$wpdb->pmpro_memberships_users} (user_id, membership_id, status, startdate, enddate) 
+						SELECT 
+							u.ID,  			#ID from wp_users table
+							" . $give_level_id . ", 			#id of the level to give users
+							'active', 		#status to give users
+							'" . $give_level_startdate . "', 		#start date in YYYY-MM-DD format
+							'" . $give_level_enddate . "' 		#end date in YYYY-MM-DD format, use '' for auto-recurring/no end date
+						FROM {$wpdb->users} u 
+							LEFT JOIN {$wpdb->pmpro_memberships_users} mu
+								ON u.ID = mu.user_id 
+								AND status = 'active' 
+						WHERE mu.id IS NULL
+			";
+			$wpdb->query($sqlQuery);
+						
+			//assume it worked
+			echo "<hr /><p><strong>" . $wpdb->rows_affected . " users were give level " . $give_level_id . ".</strong></p>";
+		}
+	}
+	
 	//cancelling a lvel
 	if($cancel_level)
 	{
@@ -265,12 +298,22 @@
 			<label for="clean_pmpro_options">Delete all PMPro options. (Any option prefixed with pmpro_ but not the DB version or PMPro page_id options.)</label>
 		</p>
 
-		<hr />
+		<hr />		
 		<p>
 			<input type="checkbox" id="move_level" name="move_level" value="1" /> 
 			<label for="move_level">
 				Change all members with level ID <input type="text" name="move_level_a" value="" size="4" /> to level ID <input type="text" name="move_level_b" value="" size="4" />. Will NOT cancel any recurring subscriptions.
 			</label>
+			<br/ ><small>This only changes the users' levels via the database and does NOT fire any pmpro_change_membership_level hooks.</small>
+		</p>
+
+		<hr />
+		<p>
+			<input type="checkbox" id="give_level" name="give_level" value="1" /> 
+			<label for="give_level">
+				Give all non-members level ID <input type="text" name="give_level_id" value="" size="4" />. Set the start date to <input type="text" name="give_level_startdate" value="" size="10" /> (YYYY-MM-DD) and set the end date to <input type="text" name="give_level_enddate" value="" size="10" /> (optional, YYYY-MM-DD). 
+			</label>
+			<br/ ><small>This only gives users' the level via the database and does NOT fire any pmpro_change_membership_level hooks.</small>
 		</p>
 
 		<hr />

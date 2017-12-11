@@ -3,7 +3,7 @@
  * Plugin Name: Paid Memberships Pro - Developer's Toolkit
  * Author: Stranger Studios
  * Description: Various tools to test and debug Paid Memberships Pro enabled websites.
- * Version: .4
+ * Version: .5
  */
 
 /*
