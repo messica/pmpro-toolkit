@@ -133,8 +133,8 @@
 			{
 				//emails				
 				$wpdb->query("DELETE FROM $wpdb->users WHERE ID = " . $user_id . " LIMIT 1");
-				$wpdb->query("DELETE FROM $wpdb->usermeta WHERE user_id = " . $user_id . " LIMIT 1");
-			}			
+				$wpdb->query("DELETE FROM $wpdb->usermeta WHERE user_id = " . $user_id);
+			}
 			
 			echo ". ";
 		}

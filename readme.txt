@@ -32,6 +32,7 @@ Please post it in the issues section of GitHub and we'll fix it as soon as we ca
 = .5 =
 * FEATURE: Added a script to give non-members a level.
 * BUG FIX: No longer trying to delete the memberships_users table twice. (Thanks, bhdd on GitHub)
+* BUG FIX: Fixed issue where only one entry on the usermeta table was deleted for each user. (Thanks, bhdd on GitHub)
 
 = .4 =
 * Added script to change members from one level to another.
