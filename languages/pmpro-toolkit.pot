@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Paid Memberships Pro - Developer's Toolkit\n"
-"POT-Creation-Date: 2017-12-12 00:43-0500\n"
-"PO-Revision-Date: 2017-12-12 00:43-0500\n"
+"POT-Creation-Date: 2017-12-12 10:57-0500\n"
+"PO-Revision-Date: 2017-12-12 10:57-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,45 +21,54 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: adminpages/scripts.php:78
+#: adminpages/scripts.php:74
 msgid "Member tables have been truncated."
 msgstr ""
 
-#: adminpages/scripts.php:92
+#: adminpages/scripts.php:88
 msgid "Level and discount code tables have been truncated."
 msgstr ""
 
-#: adminpages/scripts.php:105
+#: adminpages/scripts.php:101
 msgid "Scrubbing user data..."
 msgstr ""
 
-#: adminpages/scripts.php:145
+#: adminpages/scripts.php:144
 msgid "Deleting non-admins..."
 msgstr ""
 
-#: adminpages/scripts.php:170
+#: adminpages/scripts.php:171
 msgid "Options deleted."
 msgstr ""
 
-#: adminpages/scripts.php:186
+#: adminpages/scripts.php:188 adminpages/scripts.php:239
 msgid "Please enter a level ID > 1 for each options."
 msgstr ""
 
-#: adminpages/scripts.php:209
+#: adminpages/scripts.php:201
+msgid "Couldn't find users with level ID "
+msgstr ""
+
+#: adminpages/scripts.php:214
 msgid ""
 "Users updated. Running pmpro_after_change_membership_level filter for all "
 "users..."
 msgstr ""
 
-#: adminpages/scripts.php:243
+#: adminpages/scripts.php:261
+#, php-format
+msgid "%s users were give level %s "
+msgstr ""
+
+#: adminpages/scripts.php:287
 msgid "Cancelling users..."
 msgstr ""
 
-#: adminpages/scripts.php:266
+#: adminpages/scripts.php:310
 msgid "Require Membership options copied."
 msgstr ""
 
-#: adminpages/scripts.php:279
+#: adminpages/scripts.php:320
 msgid ""
 "This feature allows you to either clear data from PMPro-related database "
 "tables and options or to scrub member email and transaction id data to "
@@ -67,78 +76,98 @@ msgid ""
 "changed."
 msgstr ""
 
-#: adminpages/scripts.php:281
+#: adminpages/scripts.php:322
 msgid ""
 "Check the options that you would like to apply. The cleanup scripts will be "
 "run upon saving these settings."
 msgstr ""
 
-#: adminpages/scripts.php:284
-#, php-format
+#: adminpages/scripts.php:325
 msgid ""
-"%s Checking these options WILL delete data from your database. Please backup "
-"first and make sure that you intend to delete this data."
+"<strong>IMPORTANT NOTE:</strong> Checking these options WILL delete data "
+"from your database. Please backup first and make sure that you intend to "
+"delete this data."
 msgstr ""
 
-#: adminpages/scripts.php:290
+#: adminpages/scripts.php:331
 msgid "Delete all member data."
 msgstr ""
 
-#: adminpages/scripts.php:296
+#: adminpages/scripts.php:337
 msgid "Delete all level and discount code data."
 msgstr ""
 
-#: adminpages/scripts.php:302
+#: adminpages/scripts.php:343
 #, php-format
 msgid ""
 "Scrub member emails and transaction ids. Updates non-admins in %s and %s "
 "tables."
 msgstr ""
 
-#: adminpages/scripts.php:303 adminpages/scripts.php:310
+#: adminpages/scripts.php:344 adminpages/scripts.php:351
 msgid "This may time out on slow servers or sites with large numbers of users."
 msgstr ""
 
-#: adminpages/scripts.php:309
+#: adminpages/scripts.php:350
 #, php-format
 msgid "Delete non-admin users. (Deletes from %s and %s tables directly.)"
 msgstr ""
 
-#: adminpages/scripts.php:316
+#: adminpages/scripts.php:357
 msgid ""
 "Delete all PMPro options. (Any option prefixed with pmpro_ but not the DB "
 "version or PMPro page_id options.)"
 msgstr ""
 
-#: adminpages/scripts.php:324
+#: adminpages/scripts.php:365
 msgid "Change all members with level ID"
 msgstr ""
 
-#: adminpages/scripts.php:326
+#: adminpages/scripts.php:367
 msgid "Will NOT cancel any recurring subscriptions."
 msgstr ""
 
-#: adminpages/scripts.php:335
+#: adminpages/scripts.php:375
+msgid "Give all non-members level ID "
+msgstr ""
+
+#: adminpages/scripts.php:375
+msgid ""
+"Set the start date to <input type=\"text\" name=\"give_level_startdate\" "
+"value=\"\" size=\"10\" /> (YYYY-MM-DD) and set the end date to "
+msgstr ""
+
+#: adminpages/scripts.php:377
+msgid ""
+"This only gives users' the level via the database and does NOT fire any "
+"pmpro_change_membership_level hooks."
+msgstr ""
+
+#: adminpages/scripts.php:385
 msgid "Cancel all members with level ID"
 msgstr ""
 
-#: adminpages/scripts.php:337
+#: adminpages/scripts.php:387
 msgid "WILL also cancel any recurring subscriptions."
 msgstr ""
 
-#: adminpages/scripts.php:345
+#: adminpages/scripts.php:395
 msgid "Make all pages that require level ID"
 msgstr ""
 
-#: adminpages/scripts.php:345
+#: adminpages/scripts.php:395
 msgid "also require level ID"
+msgstr ""
+
+#: adminpages/scripts.php:400
+msgid "Save Changes"
 msgstr ""
 
 #: adminpages/settings.php:16
 msgid ""
 "Enable debugging for PayPal IPNs, Authorize.net Silent Posts, Stripe "
-"Webhook, etc.<br>Enter the email address you would like the logs to be "
-"emailed to, or leave blank to disable."
+"Webhook, etc. Enter the email address you would like the logs to be emailed "
+"to, or leave blank to disable."
 msgstr ""
 
 #: adminpages/settings.php:22
@@ -151,6 +180,11 @@ msgid ""
 "any membership level(s) for a brief period of time.<br>\n"
 "\t\tTo use it, add the query string parameter <code>pmprodev_view_as</code> "
 "to your URL, passing a series of level IDs separated by hyphens."
+msgstr ""
+
+#: adminpages/settings.php:43
+#, php-format
+msgid "For example, view your homepage as %s with the link %s"
 msgstr ""
 
 #: adminpages/settings.php:46
@@ -176,55 +210,47 @@ msgid ""
 "information."
 msgstr ""
 
-#: pmpro-toolkit.php:238
-msgid "PMPro Toolkit Settings"
-msgstr ""
-
-#: pmpro-toolkit.php:238
-msgid "PMPro Toolkit"
-msgstr ""
-
-#: pmpro-toolkit.php:239
-msgid "PMPro Toolkit Scripts"
-msgstr ""
-
-#: pmpro-toolkit.php:253
+#: pmpro-toolkit.php:233
 msgid "Email Debugging"
 msgstr ""
 
-#: pmpro-toolkit.php:254
+#: pmpro-toolkit.php:234
 msgid "Scheduled Cron Job Debugging"
 msgstr ""
 
-#: pmpro-toolkit.php:255
+#: pmpro-toolkit.php:235
 msgid "Gateway/Checkout Debugging"
 msgstr ""
 
-#: pmpro-toolkit.php:259
+#: pmpro-toolkit.php:236
+msgid "\"View as...\""
+msgstr ""
+
+#: pmpro-toolkit.php:239
 msgid "Redirect PMPro Emails"
 msgstr ""
 
-#: pmpro-toolkit.php:261
+#: pmpro-toolkit.php:241
 msgid "Expire Memberships"
 msgstr ""
 
-#: pmpro-toolkit.php:262
+#: pmpro-toolkit.php:242
 msgid "Expiration Warnings"
 msgstr ""
 
-#: pmpro-toolkit.php:263
+#: pmpro-toolkit.php:243
 msgid "Credit Card Expirations"
 msgstr ""
 
-#: pmpro-toolkit.php:265
+#: pmpro-toolkit.php:245
 msgid "Gateway Callback Debug Email"
 msgstr ""
 
-#: pmpro-toolkit.php:266
+#: pmpro-toolkit.php:246
 msgid "Send Checkout Debug Email"
 msgstr ""
 
-#: pmpro-toolkit.php:268
+#: pmpro-toolkit.php:248
 msgid "Enable \\\"View As\\\" feature"
 msgstr ""
 

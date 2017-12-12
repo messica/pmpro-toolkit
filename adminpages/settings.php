@@ -40,7 +40,7 @@ function pmprodev_view_as_settings() {
 ?>
 	</p>
 	<p>
-		<?php echo esc_html_e( "For example, view your homepage as $level_name with the link $example_link", 'pmpro-toolkit' ); ?>
+		<?php echo sprintf( __( 'For example, view your homepage as %s with the link %s', 'pmpro-toolkit' ), $level_name, $example_link ); ?>
 	</p>
 	<p>
 		<?php echo esc_html_e( 'Use "r" to reset the "View as" filter, and any nonexistent level ID (for example, "n" will never be a level ID) to emulate having no membership level.', 'pmpro-toolkit' ); ?>

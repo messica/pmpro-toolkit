@@ -233,10 +233,10 @@ function pmprodev_admin_init() {
 	add_settings_section( 'pmprodev-email', __( 'Email Debugging', 'pmpro-toolkit' ), 'pmprodev_email_settings', 'pmprodev' );
 	add_settings_section( 'pmprodev-cron', __( 'Scheduled Cron Job Debugging', 'pmpro-toolkit' ), 'pmprodev_cron_settings', 'pmprodev' );
 	add_settings_section( 'pmprodev-gateway', __( 'Gateway/Checkout Debugging', 'pmpro-toolkit' ), 'pmprodev_gateway_settings', 'pmprodev' );
-	add_settings_section( 'pmprodev-view-as', '"View as..."', 'pmprodev_view_as_settings', 'pmprodev' );
+	add_settings_section( 'pmprodev-view-as', __( '"View as..."', 'pmpro-toolkit' ), 'pmprodev_view_as_settings', 'pmprodev' );
 
 	// add settings fields
-	add_settings_field( 'redirect_email',__( 'Redirect PMPro Emails', 'pmpro-toolkit' ), 'pmprodev_settings_redirect_email', 'pmprodev', 'pmprodev-email' );
+	add_settings_field( 'redirect_email', __( 'Redirect PMPro Emails', 'pmpro-toolkit' ), 'pmprodev_settings_redirect_email', 'pmprodev', 'pmprodev-email' );
 
 	add_settings_field( 'cron-expire-memberships', __( 'Expire Memberships', 'pmpro-toolkit' ), 'pmprodev_settings_cron_expire_memberships', 'pmprodev', 'pmprodev-cron' );
 	add_settings_field( 'cron-expiration-warnings', __( 'Expiration Warnings', 'pmpro-toolkit' ), 'pmprodev_settings_cron_expiration_warnings', 'pmprodev', 'pmprodev-cron' );

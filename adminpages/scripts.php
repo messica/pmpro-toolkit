@@ -322,7 +322,7 @@
 		<p><?php echo esc_html_e( 'Check the options that you would like to apply. The cleanup scripts will be run upon saving these settings.', 'pmpro-toolkit' ); ?></p>
 		
 		<div class="error">
-			<p><?php echo sprintf( __( '%s Checking these options WILL delete data from your database. Please backup first and make sure that you intend to delete this data.', 'pmpro-toolkit' ), '<strong>IMPORTANT NOTE:</strong>' ); ?></p>
+			<p><?php echo __( '<strong>IMPORTANT NOTE:</strong> Checking these options WILL delete data from your database. Please backup first and make sure that you intend to delete this data.', 'pmpro-toolkit' ); ?></p>
 		</div>
 		
 		<hr />
