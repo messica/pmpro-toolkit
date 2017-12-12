@@ -230,22 +230,22 @@ function pmprodev_admin_init() {
     register_setting('pmprodev_options', 'pmprodev_options');
 
     //add settings sections
-    add_settings_section('pmprodev-email', 'Email Debugging', 'pmprodev_email_settings', 'pmprodev');
-	add_settings_section('pmprodev-cron', 'Scheduled Cron Job Debugging', 'pmprodev_cron_settings', 'pmprodev');    
-	add_settings_section('pmprodev-gateway', 'Gateway/Checkout Debugging', 'pmprodev_gateway_settings', 'pmprodev');    
-    add_settings_section('pmprodev-view-as', '"View as..."', 'pmprodev_view_as_settings', 'pmprodev');
-		
-    //add settings fields
-    add_settings_field('redirect_email', 'Redirect PMPro Emails', 'pmprodev_settings_redirect_email', 'pmprodev', 'pmprodev-email');    
-	
-	add_settings_field('cron-expire-memberships', 'Expire Memberships', 'pmprodev_settings_cron_expire_memberships', 'pmprodev', 'pmprodev-cron');   
-	add_settings_field('cron-expiration-warnings', 'Expiration Warnings', 'pmprodev_settings_cron_expiration_warnings', 'pmprodev', 'pmprodev-cron');
-	add_settings_field('cron-credit-card-expiring', 'Credit Card Expirations', 'pmprodev_settings_cron_credit_card_expiring', 'pmprodev', 'pmprodev-cron');	
-	
-	add_settings_field('ipn-debug', 'Gateway Callback Debug Email', 'pmprodev_settings_ipn_debug', 'pmprodev', 'pmprodev-gateway');   
-    add_settings_field('checkout_debug_email', 'Send Checkout Debug Email', 'pmprodev_settings_checkout_debug_email', 'pmprodev', 'pmprodev-gateway');
-	
-    add_settings_field('view_as_enabled', 'Enable "View As" feature', 'pmprodev_settings_view_as_enabled', 'pmprodev', 'pmprodev-view-as');		
+	add_settings_section( 'pmprodev-email', __( 'Email Debugging', 'pmpro-toolkit' ), 'pmprodev_email_settings', 'pmprodev' );
+	add_settings_section( 'pmprodev-cron', __( 'Scheduled Cron Job Debugging', 'pmpro-toolkit' ), 'pmprodev_cron_settings', 'pmprodev' );
+	add_settings_section( 'pmprodev-gateway', __( 'Gateway/Checkout Debugging', 'pmpro-toolkit' ), 'pmprodev_gateway_settings', 'pmprodev' );
+	add_settings_section( 'pmprodev-view-as', '"View as..."', 'pmprodev_view_as_settings', 'pmprodev' );
+
+	// add settings fields
+	add_settings_field( 'redirect_email',__( 'Redirect PMPro Emails', 'pmpro-toolkit' ), 'pmprodev_settings_redirect_email', 'pmprodev', 'pmprodev-email' );
+
+	add_settings_field( 'cron-expire-memberships', __( 'Expire Memberships', 'pmpro-toolkit' ), 'pmprodev_settings_cron_expire_memberships', 'pmprodev', 'pmprodev-cron' );
+	add_settings_field( 'cron-expiration-warnings', __( 'Expiration Warnings', 'pmpro-toolkit' ), 'pmprodev_settings_cron_expiration_warnings', 'pmprodev', 'pmprodev-cron' );
+	add_settings_field( 'cron-credit-card-expiring', __( 'Credit Card Expirations', 'pmpro-toolkit' ), 'pmprodev_settings_cron_credit_card_expiring', 'pmprodev', 'pmprodev-cron' );
+
+	add_settings_field( 'ipn-debug', __( 'Gateway Callback Debug Email', 'pmpro-toolkit' ), 'pmprodev_settings_ipn_debug', 'pmprodev', 'pmprodev-gateway' );
+	add_settings_field( 'checkout_debug_email', __( 'Send Checkout Debug Email', 'pmpro-toolkit' ), 'pmprodev_settings_checkout_debug_email', 'pmprodev', 'pmprodev-gateway' );
+
+	add_settings_field( 'view_as_enabled', __( 'Enable \"View As\" feature', 'pmpro-toolkit' ), 'pmprodev_settings_view_as_enabled', 'pmprodev', 'pmprodev-view-as' );
 }
 add_action('admin_init', 'pmprodev_admin_init');
 

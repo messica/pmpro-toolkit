@@ -67,28 +67,42 @@
 	if($clean_member_tables)
 	{
 		foreach($pmprodev_member_tables as $table)
-			$wpdb->query("TRUNCATE $table");
-			
-		echo "<hr /><p><strong>Member tables have been truncated.</strong></p>";
+			$wpdb->query("TRUNCATE $table");	
+
+		?><hr /><p><strong>
+		<?php
+		echo __( 'Member tables have been truncated.', 'pmpro-toolkit' );
+		?>
+		</strong></p>
+		<?php
 	}
-	
-	//clean level and discount code tables
-	if($clean_level_data)
-	{
-		foreach($pmprodev_other_tables as $table)
-			$wpdb->query("TRUNCATE $table");
-			
-			
-		echo "<hr /><p><strong>Level and discount code tables have been truncated.</strong></p>";
+
+	// clean level and discount code tables
+	if ( $clean_level_data ) {
+		foreach ( $pmprodev_other_tables as $table ) {
+			$wpdb->query( "TRUNCATE $table" );
+		}
+		?>
+		<hr /><p><strong>
+		<?php
+		echo __( 'Level and discount code tables have been truncated.', 'pmpro-toolkit' );
+		?>
+		</strong></p>
+		<?php
 	}
+
+	// scrub member data
+	if ( $scrub_member_data ) {
+		$user_ids = $wpdb->get_col( "SELECT ID FROM $wpdb->users" );
+
+		?>
+		<hr /><p><strong>
+		<?php
+		echo __( 'Scrubbing user data...', 'pmpro-toolkit' );
+		?>
+		</strong></p>
+		<?php
 	
-	//scrub member data
-	if($scrub_member_data)
-	{
-		$user_ids = $wpdb->get_col("SELECT ID FROM $wpdb->users");
-		
-		echo "<hr /><p><strong>Scrubbing user data...</strong> ";
-		
 		$count = 0;
 		$admin_email = get_option("admin_email");
 		
@@ -124,9 +138,14 @@
 	if($delete_users)
 	{
 		$user_ids = $wpdb->get_col("SELECT ID FROM $wpdb->users");
-		
-		echo "<hr /><p><strong>Deleting non-admins...</strong> ";
-		
+		?>
+		<hr /><p><strong>
+		<?php
+		echo __( 'Deleting non-admins...', 'pmpro-toolkit' );
+		?>
+		</strong></p>
+		<?php
+	
 		foreach($user_ids as $user_id)
 		{		
 			if(!user_can($user_id, "manage_options"))
@@ -146,10 +165,15 @@
 	if($clean_pmpro_options)
 	{
 		$wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE 'pmpro_%' AND option_name <> 'pmpro_db_version' AND option_name NOT LIKE 'pmpro_%page_id'");
-		
-		echo "<hr /><p><strong>Options deleted.</strong></p>";
+		?>
+		<hr /><p><strong>
+		<?php
+		echo __( 'Options deleted.', 'pmpro-toolkit' );
+		?>
+		</strong></p>
+		<?php
 	}
-	
+
 	//moving level
 	if($move_level)
 	{
@@ -158,22 +182,39 @@
 
 		//make sure both levels are > 0
 		if($from_level_id < 1 || $to_level_id < 1)
-			echo "<hr /><p><strong>Please enter a level ID > 1 for each options.</strong></p>";
-		else
-		{
+		?>
+		<hr /><p><strong>
+		<?php
+		echo __( 'Please enter a level ID > 1 for each options.', 'pmpro-toolkit' );
+		?>
+		</strong></p>
+		<?php
+		} else {
 			//get user ids to run hook later
 			$user_ids = $wpdb->get_col("SELECT user_id FROM $wpdb->pmpro_memberships_users WHERE membership_id = '" . $from_level_id . "' AND status = 'active' ");
 
 			if(empty($user_ids))
 			{
-				echo "<hr /><p><strong>Couldn't find users with level ID " . $from_level_id . ".</strong></p>";
+		?>
+		<hr /><p><strong>
+		<?php
+		echo sprintf( __( 'Couldn\'t find users with level ID ', 'pmpro-toolkit' ), $from_level_id );
+		?>
+		</strong></p>
+		<?php
 			}
 			else
 			{
 				//update users in DB
 				$wpdb->query("UPDATE $wpdb->pmpro_memberships_users SET membership_id = " . $to_level_id . " WHERE membership_id = " . $from_level_id . " AND STATUS =  'active';");
 
-				echo "<hr /><p><strong>Users updated. Running pmpro_after_change_membership_level filter for all users...</strong> ";
+			?>
+			<hr /><p><strong>
+			<?php
+				echo __( 'Users updated. Running pmpro_after_change_membership_level filter for all users...', 'pmpro-toolkit' );
+			?>
+			</strong></p>
+			<?php
 
 				foreach($user_ids as $user_id)
 				{
@@ -192,7 +233,13 @@
 		$give_level_enddate = preg_replace('/^0-9\-/', '', $_REQUEST['give_level_enddate']);
 				
 		if(empty($give_level_id) || empty($give_level_startdate) || empty($give_level_enddate)) {
-			echo "<hr /><p><strong>Please enter a level ID, start date, and end date.</strong></p>";
+		?>
+		<hr /><p><strong>
+		<?php
+		echo __( 'Please enter a level ID > 1 for each options.', 'pmpro-toolkit' );
+		?>
+		</strong></p>
+		<?php
 		} else {
 			$sqlQuery = "INSERT INTO {$wpdb->pmpro_memberships_users} (user_id, membership_id, status, startdate, enddate) 
 						SELECT 
@@ -208,12 +255,14 @@
 						WHERE mu.id IS NULL
 			";
 			$wpdb->query($sqlQuery);
-						
+	
 			//assume it worked
-			echo "<hr /><p><strong>" . $wpdb->rows_affected . " users were give level " . $give_level_id . ".</strong></p>";
+			echo '<hr><p><strong>';
+			echo sprintf( __( '%s users were give level %s ', 'pmpro-toolkit' ), $wpdb->rows_affected, $give_level_id );
+			echo '.</strong></p>';
 		}
 	}
-	
+
 	//cancelling a lvel
 	if($cancel_level)
 	{
@@ -224,12 +273,21 @@
 
 		if(empty($user_ids))
 		{
-			echo "<hr /><p><strong>Couldn't find users with level ID " . $cancel_level_id . ".</strong></p>";
-		}
-		else
-		{
-			echo "<hr /><p><strong>Cancelling users...</strong> ";
-
+		?>
+		<hr /><p><strong>
+		<?php
+		echo esc_html_e( "Couldn't find users with level ID $cancel_level_id.", 'pmpro-toolkit' );
+		?>
+		</strong>
+		<?php
+		} else {
+		?>
+		<hr /><p><strong>
+		<?php
+		echo esc_html_e( 'Cancelling users...', 'pmpro-toolkit' );
+		?>
+		</strong>
+		<?php
 			foreach($user_ids as $user_id)
 			{
 				pmpro_changeMembershipLevel(0, $user_id);
@@ -257,69 +315,74 @@
 	<form id="form-scripts" action="" method="post">
 		<input type="hidden" name="page" value="pmprodev-database-scripts" />	
 	
-		<p>This feature allows you to either clear data from PMPro-related database tables and options or to scrub member email and transaction id data to prevent real members from receiving updates or having their subscriptions changed.</p>
-		
-		<p>Check the options that you would like to apply. The cleanup scripts will be run upon saving these settings.</p>
+		<p><?php echo esc_html_e( 'This feature allows you to either clear data from PMPro-related database tables and options or to scrub member email and transaction id data to prevent real members from receiving updates or having their subscriptions changed.', 'pmpro-toolkit' ); ?></p>
+
+		<p><?php echo esc_html_e( 'Check the options that you would like to apply. The cleanup scripts will be run upon saving these settings.', 'pmpro-toolkit' ); ?></p>
 		
 		<div class="error">
-			<p><strong>IMPORTANT NOTE:</strong> Checking these options WILL delete data from your database. Please backup first and make sure that you intend to delete this data.</p>
+			<p><?php echo sprintf( __( '%s Checking these options WILL delete data from your database. Please backup first and make sure that you intend to delete this data.', 'pmpro-toolkit' ), '<strong>IMPORTANT NOTE:</strong>' ); ?></p>
 		</div>
 		
 		<hr />
 		<p>
 			<input type="checkbox" id="clean_member_tables" name="clean_member_tables" value="1" /> 
-			<label for="clean_member_tables">Delete all member data. (<?php echo implode(", ", $pmprodev_member_tables);?>)</label>
+			<label for="clean_member_tables"><?php echo esc_html_e( 'Delete all member data.', 'pmpro-toolkit' ); ?> (<?php echo implode( ', ', $pmprodev_member_tables ); ?>)</label>
 		</p>
 		
 		<hr />
 		<p>
 			<input type="checkbox" id="clean_level_data" name="clean_level_data" value="1" /> 
-			<label for="clean_level_data">Delete all level and discount code data. (<?php echo implode(", ", $pmprodev_other_tables);?>)</label>
+			<label for="clean_level_data"><?php echo esc_html_e( 'Delete all level and discount code data.', 'pmpro-toolkit' ); ?> (<?php echo implode( ', ', $pmprodev_other_tables ); ?>)</label>
 		</p>
 
-		<hr />		
+		<hr />
 		<p>
 			<input type="checkbox" id="scrub_member_data" name="scrub_member_data" value="1" /> 
-			<label for="scrub_member_data">Scrub member emails and transaction ids. (Updates non-admins in <?php echo $wpdb->users;?> and <?php echo $wpdb->pmpro_membership_orders;?> tables.)</label>
-			<br/ ><small>This may time out on slow servers or sites with large numbers of users.</small>
+			<label for="scrub_member_data"><?php echo sprintf( __( 'Scrub member emails and transaction ids. Updates non-admins in %s and %s tables.', 'pmpro-toolkit' ), $wpdb->users, $wpdb->pmpro_membership_orders ); ?></label>
+			<br/ ><small><?php echo esc_html_e( 'This may time out on slow servers or sites with large numbers of users.', 'pmpro-toolkit' ); ?></small>
 		</p>
 
 		<hr />
 		<p>
 			<input type="checkbox" id="delete_users" name="delete_users" value="1" /> 
-			<label for="delete_users">Delete non-admin users. (Deletes from <?php echo $wpdb->users;?> and <?php echo $wpdb->usermeta;?> tables directly.)</label>
-			<br/ ><small>This may time out on slow servers or sites with large numbers of users.</small>
+			<label for="delete_users"><?php echo sprintf( __( "Delete non-admin users. (Deletes from %s and %s tables directly.)", 'pmpro-toolkit' ), $wpdb->users, $wpdb->usermeta ); ?></label>
+			<br/ ><small><?php echo esc_html_e( 'This may time out on slow servers or sites with large numbers of users.', 'pmpro-toolkit' ); ?></small>
 		</p>
 
 		<hr />
 		<p>
 			<input type="checkbox" id="clean_pmpro_options" name="clean_pmpro_options" value="1" /> 
-			<label for="clean_pmpro_options">Delete all PMPro options. (Any option prefixed with pmpro_ but not the DB version or PMPro page_id options.)</label>
+			<label for="clean_pmpro_options"><?php echo esc_html_e( 'Delete all PMPro options. (Any option prefixed with pmpro_ but not the DB version or PMPro page_id options.)', 'pmpro-toolkit' ); ?></label>
 		</p>
 
 		<hr />		
 		<p>
 			<input type="checkbox" id="move_level" name="move_level" value="1" /> 
 			<label for="move_level">
-				Change all members with level ID <input type="text" name="move_level_a" value="" size="4" /> to level ID <input type="text" name="move_level_b" value="" size="4" />. Will NOT cancel any recurring subscriptions.
+			<?php
+			echo esc_html_e( 'Change all members with level ID', 'pmpro-toolkit' );
+?>
+ <input type="text" name="move_level_a" value="" size="4" /> to level ID <input type="text" name="move_level_b" value="" size="4" />. <?php echo esc_html_e( 'Will NOT cancel any recurring subscriptions.', 'pmpro-toolkit' ); ?>
 			</label>
-			<br/ ><small>This only changes the users' levels via the database and does NOT fire any pmpro_change_membership_level hooks.</small>
 		</p>
 
 		<hr />
 		<p>
 			<input type="checkbox" id="give_level" name="give_level" value="1" /> 
 			<label for="give_level">
-				Give all non-members level ID <input type="text" name="give_level_id" value="" size="4" />. Set the start date to <input type="text" name="give_level_startdate" value="" size="10" /> (YYYY-MM-DD) and set the end date to <input type="text" name="give_level_enddate" value="" size="10" /> (optional, YYYY-MM-DD). 
+				<?php echo esc_html_e( 'Give all non-members level ID ', 'pmpro-toolkit' ); ?><input type="text" name="give_level_id" value="" size="4" />. <?php echo esc_html_e( 'Set the start date to <input type="text" name="give_level_startdate" value="" size="10" /> (YYYY-MM-DD) and set the end date to ', 'pmpro-toolkit' ); ?><input type="text" name="give_level_enddate" value="" size="10" /> (optional, YYYY-MM-DD). 
 			</label>
-			<br/ ><small>This only gives users' the level via the database and does NOT fire any pmpro_change_membership_level hooks.</small>
+			<br/ ><small><?php echo esc_html_e( 'This only gives users\' the level via the database and does NOT fire any pmpro_change_membership_level hooks.', 'pmpro-toolkit' ); ?></small>
 		</p>
 
 		<hr />
 		<p>
 			<input type="checkbox" id="cancel_level" name="cancel_level" value="1" /> 
 			<label for="cancel_level">
-				Cancel all members with level ID <input type="text" name="move_levels_a" value="" size="4" />. WILL also cancel any recurring subscriptions.
+			<?php
+			echo esc_html_e( 'Cancel all members with level ID', 'pmpro-toolkit' );
+?>
+ <input type="text" name="move_levels_a" value="" size="4" />. <?php echo esc_html_e( 'WILL also cancel any recurring subscriptions.', 'pmpro-toolkit' ); ?>
 			</label>
 		</p>
 
@@ -327,12 +390,12 @@
 		<p>
 			<input type="checkbox" id="copy_memberships_pages" name="copy_memberships_pages" value="1" /> 
 			<label for="copy_memberships_pages">
-				Make all pages that require level ID <input type="text" name="copy_memberships_pages_a" value="" size="4" /> also require level ID <input type="text" name="copy_memberships_pages_b" value="" size="4" />.
+				<?php echo esc_html_e( 'Make all pages that require level ID', 'pmpro-toolkit' ); ?> <input type="text" name="copy_memberships_pages_a" value="" size="4" /> <?php echo esc_html_e( 'also require level ID', 'pmpro-toolkit' ); ?> <input type="text" name="copy_memberships_pages_b" value="" size="4" />.
 			</label>
 		</p>
 
 		<hr />
-		<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes"></p>
+		<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="<?php echo esc_html_e( 'Save Changes', 'pmpro-toolkit' ); ?>"></p>
 	</form>
 	
 	<script>
