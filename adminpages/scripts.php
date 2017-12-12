@@ -2,11 +2,11 @@
 <h2>PMPro Toolkit Database Scripts</h2>
 <?php 	
     global $wpdb, $pmprodev_member_tables, $pmprodev_other_tables;
-	
+
 	$pmprodev_member_tables = array(
 		$wpdb->pmpro_memberships_users,
 		$wpdb->pmpro_membership_orders,
-		$wpdb->pmpro_discount_codes_uses		
+		$wpdb->pmpro_discount_codes_uses
 	);
 
 	$pmprodev_other_tables = array(
@@ -223,7 +223,7 @@
 				}
 
 				echo "</p>";
-			}
+			// }
 		}
 	}
 
@@ -306,10 +306,12 @@
 
 		$wpdb->query("INSERT IGNORE INTO $wpdb->pmpro_memberships_pages (membership_id, page_id) SELECT $to_level_id, page_id FROM $wpdb->pmpro_memberships_pages WHERE membership_id = $from_level_id");
 		
-		echo "<hr /><p><strong>Require Membership options copied.</strong></p>";
+		echo '<hr /><p><strong>';
+		echo esc_html_e( 'Require Membership options copied.', 'pmpro-toolkit' );
+		echo '</strong></p>';
 	}
 
-	?>	
+	?>
     <hr />
 
 	<form id="form-scripts" action="" method="post">

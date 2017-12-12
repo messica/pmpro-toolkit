@@ -252,3 +252,19 @@ add_action('admin_init', 'pmprodev_admin_init');
 function pmprodev_settings_page() {
     require_once(plugin_dir_path(__FILE__) . '/adminpages/settings.php');
 }
+function pmpro_toolkit_load_textdomain() {
+	// get the locale
+	$locale = apply_filters( 'plugin_locale', get_locale(), 'pmpro-toolkit' );
+	$mofile = 'pmpro-toolkit-' . $locale . '.mo';
+
+	// paths to local (plugin) and global (WP) language files
+	$mofile_local  = plugin_dir_path( __FILE__ ) . '/languages/' . $mofile;
+	$mofile_global = WP_LANG_DIR . '/pmpro/' . $mofile;
+
+	// load global first
+	load_textdomain( 'pmpro-toolkit', $mofile_global );
+
+	// load local second
+	load_textdomain( 'pmpro-toolkit', $mofile_local );
+}
+add_action( 'init', 'pmpro_toolkit_load_textdomain', 1 );
