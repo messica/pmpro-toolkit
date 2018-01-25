@@ -1,11 +1,12 @@
 <?php
-/**
- * Plugin Name: Paid Memberships Pro - Developer's Toolkit
- * Author: Stranger Studios
- * Description: Various tools to test and debug Paid Memberships Pro enabled websites.
- * Version: .5
- */
-
+/*
+Plugin Name: Paid Memberships Pro - Developer's Toolkit Add On
+Plugin URI: https://www.paidmembershipspro.com/add-ons/pmpro-toolkit/
+Description: Various tools to test and debug Paid Memberships Pro enabled websites.
+Version: .5
+Author: Paid Memberships Pro
+Author URI: https://www.paidmembershipspro.com
+*/
 /*
  * Globals
  */
@@ -252,3 +253,19 @@ add_action('admin_init', 'pmprodev_admin_init');
 function pmprodev_settings_page() {
     require_once(plugin_dir_path(__FILE__) . '/adminpages/settings.php');
 }
+
+/*
+    Function to add links to the plugin row meta
+*/
+function pmprodev_plugin_row_meta($links, $file) {
+    if(strpos($file, 'pmpro-toolkit.php') !== false)
+    {
+        $new_links = array(
+            '<a href="' . esc_url('https://www.paidmembershipspro.com/add-ons/pmpro-toolkit/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
+            '<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
+        );
+        $links = array_merge($links, $new_links);
+    }
+    return $links;
+}
+add_filter('plugin_row_meta', 'pmprodev_plugin_row_meta', 10, 2);
