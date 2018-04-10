@@ -1,0 +1,324 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Paid Memberships Pro - Developer's Toolkit\n"
+"POT-Creation-Date: 2017-12-12 10:57-0500\n"
+"PO-Revision-Date: 2017-12-12 11:00-0500\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.5\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: pmpro-toolkit.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: adminpages/scripts.php:74
+msgid "Member tables have been truncated."
+msgstr "Tablas de miembros han sido truncadas."
+
+#: adminpages/scripts.php:88
+msgid "Level and discount code tables have been truncated."
+msgstr "Su Nivel Master y clase a sido restaurada."
+
+#: adminpages/scripts.php:101
+msgid "Scrubbing user data..."
+msgstr "Depuración de los datos de usuario..."
+
+#: adminpages/scripts.php:144
+msgid "Deleting non-admins..."
+msgstr "Eliminar sin credenciales de administrador..."
+
+#: adminpages/scripts.php:171
+msgid "Options deleted."
+msgstr "Opciones de borrado."
+
+#: adminpages/scripts.php:188 adminpages/scripts.php:239
+msgid "Please enter a level ID > 1 for each options."
+msgstr "Introduzca un número por cada tipo de impresión."
+
+#: adminpages/scripts.php:201
+msgid "Couldn't find users with level ID "
+msgstr "No podía encontrar a usuarios con nivel ID "
+
+#: adminpages/scripts.php:214
+msgid ""
+"Users updated. Running pmpro_after_change_membership_level filter for all "
+"users..."
+msgstr ""
+"Actualizado a los usuarios. Filtro de corriente "
+"pmpro_after_change_membership_level para todos los usuarios..."
+
+#: adminpages/scripts.php:261
+#, php-format
+msgid "%s users were give level %s "
+msgstr "los usuarios de %s eran dar nivel %s "
+
+#: adminpages/scripts.php:287
+msgid "Cancelling users..."
+msgstr "Cancelación de los usuarios..."
+
+#: adminpages/scripts.php:310
+msgid "Require Membership options copied."
+msgstr "Requiere membresía opciones de copiado."
+
+#: adminpages/scripts.php:320
+msgid ""
+"This feature allows you to either clear data from PMPro-related database "
+"tables and options or to scrub member email and transaction id data to "
+"prevent real members from receiving updates or having their subscriptions "
+"changed."
+msgstr ""
+"Esta característica le permite o borrar los datos de tablas de base de datos "
+"relacionadas con PMPro y opciones o fregar miembros datos de identificación "
+"de correo electrónico y la transacción impedir que los miembros reales de "
+"recibir actualizaciones o tener sus suscripciones cambió."
+
+#: adminpages/scripts.php:322
+msgid ""
+"Check the options that you would like to apply. The cleanup scripts will be "
+"run upon saving these settings."
+msgstr ""
+"Compruebe las opciones que desea aplicar. Se ejecutarán los scripts de "
+"limpieza a guardar estos ajustes."
+
+#: adminpages/scripts.php:325
+msgid ""
+"<strong>IMPORTANT NOTE:</strong> Checking these options WILL delete data "
+"from your database. Please backup first and make sure that you intend to "
+"delete this data."
+msgstr ""
+"<strong>NOTA IMPORTANTE:</strong>  Al marcar estas opciones, eliminará los "
+"datos de su base de datos. Haga una copia de seguridad primero y asegúrese "
+"de tener la intención de eliminar esta información."
+
+#: adminpages/scripts.php:331
+msgid "Delete all member data."
+msgstr "Eliminar todos los datos del usuario."
+
+#: adminpages/scripts.php:337
+msgid "Delete all level and discount code data."
+msgstr "Borrar todos los datos de código de nivel y de descuento."
+
+#: adminpages/scripts.php:343
+#, php-format
+msgid ""
+"Scrub member emails and transaction ids. Updates non-admins in %s and %s "
+"tables."
+msgstr ""
+"Correos electrónicos de miembros de matorral e ID de transacción. (Versiones "
+"sin credenciales de administrador en %1$s %2$s mesas y.)"
+
+#: adminpages/scripts.php:344 adminpages/scripts.php:351
+msgid "This may time out on slow servers or sites with large numbers of users."
+msgstr ""
+"Esto puede agotar el tiempo de espera en servidores lentos o sitios con gran "
+"cantidad de usuarios."
+
+#: adminpages/scripts.php:350
+#, php-format
+msgid "Delete non-admin users. (Deletes from %s and %s tables directly.)"
+msgstr ""
+"Borrar usuarios non-admino. (Deletes from %s and %s tables directemente.)"
+
+#: adminpages/scripts.php:357
+msgid ""
+"Delete all PMPro options. (Any option prefixed with pmpro_ but not the DB "
+"version or PMPro page_id options.)"
+msgstr ""
+"Eliminar todas las opciones de PMPro. (Cualquier opción con el prefijo "
+"pmpro_ pero no la versión DB o las opciones PMPro page_id)."
+
+#: adminpages/scripts.php:365
+msgid "Change all members with level ID"
+msgstr "Cambiar a todos los miembros con nivel ID"
+
+#: adminpages/scripts.php:367
+msgid "Will NOT cancel any recurring subscriptions."
+msgstr "NO cancelará ninguna suscripción recurrente."
+
+#: adminpages/scripts.php:375
+msgid "Give all non-members level ID "
+msgstr "Dar a todos los no miembros ID de nivel "
+
+#: adminpages/scripts.php:375
+msgid ""
+"Set the start date to <input type=\"text\" name=\"give_level_startdate\" "
+"value=\"\" size=\"10\" /> (YYYY-MM-DD) and set the end date to "
+msgstr ""
+"Establece la fecha de inicio en<input type=\"text\" name="
+"\"give_level_startdate\" value=\"\" size=\"10\">(AAAA-MM-DD) y la fecha "
+"final "
+
+#: adminpages/scripts.php:377
+msgid ""
+"This only gives users' the level via the database and does NOT fire any "
+"pmpro_change_membership_level hooks."
+msgstr ""
+"Esto sólo da a los usuarios el nivel a través de la base de datos y no "
+"dispara ningún ganchos pmpro_change_membership_level."
+
+#: adminpages/scripts.php:385
+msgid "Cancel all members with level ID"
+msgstr "Cancelar a todos los miembros con nivel ID"
+
+#: adminpages/scripts.php:387
+msgid "WILL also cancel any recurring subscriptions."
+msgstr "También, se cancelará cualquier suscripciones recurrentes."
+
+#: adminpages/scripts.php:395
+msgid "Make all pages that require level ID"
+msgstr "Hacer todas las páginas que requieren identificación nivel"
+
+#: adminpages/scripts.php:395
+msgid "also require level ID"
+msgstr "Miembros con un nivel de acceso"
+
+#: adminpages/scripts.php:400
+msgid "Save Changes"
+msgstr "Guardar cambios"
+
+#: adminpages/settings.php:16
+msgid ""
+"Enable debugging for PayPal IPNs, Authorize.net Silent Posts, Stripe "
+"Webhook, etc. Enter the email address you would like the logs to be emailed "
+"to, or leave blank to disable."
+msgstr ""
+"Habilite la depuración de IPN de PayPal, Publicaciones silenciosas de "
+"Authorize.net, Webhook de Stripe, etc. Ingrese la dirección de correo "
+"electrónico por la que desea que se envíen los registros, o déjela en blanco "
+"para deshabilitarla."
+
+#: adminpages/settings.php:22
+msgid "Disable scheduled scripts that run daily via WP CRON."
+msgstr ""
+"Deshabilitar los scripts programados que se ejecutan diariamente a través de "
+"WP CRON."
+
+#: adminpages/settings.php:37
+msgid ""
+"Enabling \"View as...\" will allow admins to view any page as if they had "
+"any membership level(s) for a brief period of time.<br>\n"
+"\t\tTo use it, add the query string parameter <code>pmprodev_view_as</code> "
+"to your URL, passing a series of level IDs separated by hyphens."
+msgstr ""
+"Habilitar “Ver como …” permitirá a los administradores ver cualquier página "
+"como si tuvieran algún nivel de membresía durante un breve período de "
+"tiempo.\n"
+"Para usarlo, agregue el parámetro de cadena de consulta <code> "
+"pmprodev_view_as </ code> a su URL, pasando una serie de ID de nivel "
+"separadas por guiones."
+
+#: adminpages/settings.php:43
+#, php-format
+msgid "For example, view your homepage as %s with the link %s"
+msgstr "Por ejemplo, ve a tu página de inicio como %s con el link %s"
+
+#: adminpages/settings.php:46
+msgid ""
+"Use \"r\" to reset the \"View as\" filter, and any nonexistent level ID (for "
+"example, \"n\" will never be a level ID) to emulate having no membership "
+"level."
+msgstr ""
+"Uso de \"r\" para restablecer el filtro \"Ver como\" y cualquier ID nivel "
+"inexistente (por ejemplo, \"n\" nunca será un identificador de nivel) para "
+"emular no tener ningún nivel de membresía."
+
+#: adminpages/settings.php:60
+msgid "Redirect all Paid Memberships Pro emails to a specific address."
+msgstr ""
+"Redirigir Paid Memberships Pro todos los correos a una dirección específica."
+
+#: adminpages/settings.php:75 adminpages/settings.php:87
+#: adminpages/settings.php:99
+msgid "Check to disable."
+msgstr "Marca para desactivar."
+
+#: adminpages/settings.php:115
+msgid ""
+"Send an email every time the Checkout page is hit.<br>This email will "
+"contain data about the request, user, membership level, order, and other "
+"information."
+msgstr ""
+"Envíe un correo electrónico cada vez que acceda a la página de pago. <br> "
+"Este correo electrónico contendrá información sobre la solicitud, el "
+"usuario, el nivel de membresía, el pedido y otra información."
+
+#: pmpro-toolkit.php:233
+msgid "Email Debugging"
+msgstr "Correo electrónico de depuración"
+
+#: pmpro-toolkit.php:234
+msgid "Scheduled Cron Job Debugging"
+msgstr "Programada de cron de depuración"
+
+#: pmpro-toolkit.php:235
+msgid "Gateway/Checkout Debugging"
+msgstr "Puerta de entrada/salida de depuración"
+
+#: pmpro-toolkit.php:236
+msgid "\"View as...\""
+msgstr "“Ver como…”"
+
+#: pmpro-toolkit.php:239
+msgid "Redirect PMPro Emails"
+msgstr "Redirigir correos PMPro"
+
+#: pmpro-toolkit.php:241
+msgid "Expire Memberships"
+msgstr "Vencimiento de membresías"
+
+#: pmpro-toolkit.php:242
+msgid "Expiration Warnings"
+msgstr "Avisos de vencimiento"
+
+#: pmpro-toolkit.php:243
+msgid "Credit Card Expirations"
+msgstr "Caducidad de la tarjeta de crédito"
+
+#: pmpro-toolkit.php:245
+msgid "Gateway Callback Debug Email"
+msgstr ""
+"Devolución de llamada de puerta de enlace de depuración correo electrónico"
+
+#: pmpro-toolkit.php:246
+msgid "Send Checkout Debug Email"
+msgstr "Enviar correo electrónico de depuración de salida"
+
+#: pmpro-toolkit.php:248
+msgid "Enable \\\"View As\\\" feature"
+msgstr "Activar ”Ver como” "
+
+#. Plugin Name of the plugin/theme
+msgid "Paid Memberships Pro - Developer's Toolkit"
+msgstr "Actualizando Paid Memberships Pro"
+
+#. Description of the plugin/theme
+msgid "Various tools to test and debug Paid Memberships Pro enabled websites."
+msgstr ""
+"Varias herramientas para probar y depurar Paid Memberships Pro habilitadas "
+"para sitios web."
+
+#. Author of the plugin/theme
+msgid "Stranger Studios"
+msgstr "Stranger Studios"
+
+#~ msgid "PMPro Toolkit Settings"
+#~ msgstr "Configuración de herramientas PMPro"
+
+#~ msgid "PMPro Toolkit"
+#~ msgstr "Herramientas PMPro"
+
+#~ msgid "PMPro Toolkit Scripts"
+#~ msgstr "PMPro herramientas Scripts"
+
+#~ msgid "This is plain text"
+#~ msgstr "Esto es texto plano"
