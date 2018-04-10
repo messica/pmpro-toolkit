@@ -3,7 +3,7 @@
  * Plugin Name: Paid Memberships Pro - Developer's Toolkit Add On
  * Plugin URI: https://www.paidmembershipspro.com/add-ons/pmpro-toolkit/
  * Description: Various tools to test and debug Paid Memberships Pro enabled websites.
- * Version: .5
+ * Version: .5.1
  * Author: Paid Memberships Pro
  * Author URI: https://www.paidmembershipspro.com
  * Text Domain: pmpro-toolkit
@@ -280,7 +280,7 @@ function pmprodev_plugin_row_meta($links, $file) {
     {
         $new_links = array(
             '<a href="' . esc_url('https://www.paidmembershipspro.com/add-ons/pmpro-toolkit/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
-            '<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
+            '<a href="' . esc_url('https://www.paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
         );
         $links = array_merge($links, $new_links);
     }
