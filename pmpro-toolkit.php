@@ -1,13 +1,10 @@
 <?php
 /**
- * Plugin Name: Paid Memberships Pro - Developer's Toolkit Add On
- * Plugin URI: https://www.paidmembershipspro.com/add-ons/pmpro-toolkit/
+ * Plugin Name: Paid Memberships Pro - Developer's Toolkit
+ * Author: Stranger Studios
  * Description: Various tools to test and debug Paid Memberships Pro enabled websites.
- * Version: .5.1
- * Author: Paid Memberships Pro
- * Author URI: https://www.paidmembershipspro.com
- * Text Domain: pmpro-toolkit
-*/
+ * Version: .5
+ */
 
 /*
  * Globals
@@ -46,14 +43,14 @@ function pmprodev_gateway_debug_setup() {
 
     if(!empty($pmprodev_options['ipn_debug']) && !defined('PMPRO_INS_DEBUG'))
         define('PMPRO_INS_DEBUG', $pmprodev_options['ipn_debug']);
-		
+
 	//unhook crons
 	if(!empty($pmprodev_options['expire_memberships']))
 		remove_action("pmpro_cron_expire_memberships", "pmpro_cron_expire_memberships");
 	if(!empty($pmprodev_options['expiration_warnings']))
 		remove_action("pmpro_cron_expiration_warnings", "pmpro_cron_expiration_warnings");
 	if(!empty($pmprodev_options['credit_card_expiring']))
-		remove_action("pmpro_cron_credit_card_expiring_warnings", "pmpro_cron_credit_card_expiring_warnings");	
+		remove_action("pmpro_cron_credit_card_expiring_warnings", "pmpro_cron_credit_card_expiring_warnings");
 }
 add_action('init', 'pmprodev_gateway_debug_setup');
 
@@ -89,7 +86,7 @@ function pmprodev_checkout_debug_email($level) {
         $http = 'http://';
 
     $email->subject = sprintf('%s Checkout Page Debug Log', get_bloginfo('name'));
-    $email->recipient = $pmprodev_options['checkout_debug_email'];
+    $email->email = $pmprodev_options['checkout_debug_email'];
     $email->template = 'checkout_debug';
     $email->body = file_get_contents(plugin_dir_path(__FILE__) . '/email/checkout_debug.html');
     $email->data = array(
@@ -146,8 +143,8 @@ function pmprodev_view_as_access_filter($hasaccess, $post, $user, $levels) {
 	if(!empty($_COOKIE['pmprodev_view_as']))
 		$view_as_level_ids = $_COOKIE['pmprodev_view_as'];
 	else
-		$view_as_level_ids = NULL;   
-   
+		$view_as_level_ids = NULL;
+
     $membership_level_capability = apply_filters('pmpro_edit_member_capability', 'manage_options');
 
     if(isset($view_as_level_ids) && current_user_can($membership_level_capability)) {
@@ -184,7 +181,7 @@ function pmprodev_view_as_has_membership_level($return, $user_id, $levels) {
 		$view_as_level_ids = $_COOKIE['pmprodev_view_as'];
 	else
 		$view_as_level_ids = NULL;
-		
+
     $membership_level_capability = apply_filters('pmpro_edit_member_capability', 'manage_options');
 
     if(isset($view_as_level_ids) && current_user_can($membership_level_capability)) {
@@ -208,7 +205,7 @@ function pmprodev_view_as_has_membership_level($return, $user_id, $levels) {
         //default to false to overrdide real levels
         return false;
     }
-	
+
 	return $return;
 }
 add_filter('pmpro_has_membership_level', 'pmprodev_view_as_has_membership_level', 10, 3);
@@ -217,7 +214,7 @@ add_filter('pmpro_has_membership_level', 'pmprodev_view_as_has_membership_level'
  * Add settings page
  */
 function pmprodev_admin_menu() {
-    add_options_page('PMPro Toolkit Settings', 'PMPro Toolkit', apply_filters('pmpro_edit_member_capability', 'manage_options'), 'pmprodev', 'pmprodev_settings_page');	
+    add_options_page('PMPro Toolkit Settings', 'PMPro Toolkit', apply_filters('pmpro_edit_member_capability', 'manage_options'), 'pmprodev', 'pmprodev_settings_page');
 	add_management_page('PMPro Toolkit Scripts', 'PMPro Toolkit Scripts', 'manage_options', 'pmprodev-database-scripts', 'pmprodev_database_scripts_page');
 }
 add_action('admin_menu', 'pmprodev_admin_menu');
@@ -233,57 +230,25 @@ function pmprodev_admin_init() {
     register_setting('pmprodev_options', 'pmprodev_options');
 
     //add settings sections
-	add_settings_section( 'pmprodev-email', __( 'Email Debugging', 'pmpro-toolkit' ), 'pmprodev_email_settings', 'pmprodev' );
-	add_settings_section( 'pmprodev-cron', __( 'Scheduled Cron Job Debugging', 'pmpro-toolkit' ), 'pmprodev_cron_settings', 'pmprodev' );
-	add_settings_section( 'pmprodev-gateway', __( 'Gateway/Checkout Debugging', 'pmpro-toolkit' ), 'pmprodev_gateway_settings', 'pmprodev' );
-	add_settings_section( 'pmprodev-view-as', __( '"View as..."', 'pmpro-toolkit' ), 'pmprodev_view_as_settings', 'pmprodev' );
+    add_settings_section('pmprodev-email', 'Email Debugging', 'pmprodev_email_settings', 'pmprodev');
+	add_settings_section('pmprodev-cron', 'Scheduled Cron Job Debugging', 'pmprodev_cron_settings', 'pmprodev');
+	add_settings_section('pmprodev-gateway', 'Gateway/Checkout Debugging', 'pmprodev_gateway_settings', 'pmprodev');
+    add_settings_section('pmprodev-view-as', '"View as..."', 'pmprodev_view_as_settings', 'pmprodev');
 
-	// add settings fields
-	add_settings_field( 'redirect_email', __( 'Redirect PMPro Emails', 'pmpro-toolkit' ), 'pmprodev_settings_redirect_email', 'pmprodev', 'pmprodev-email' );
+    //add settings fields
+    add_settings_field('redirect_email', 'Redirect PMPro Emails', 'pmprodev_settings_redirect_email', 'pmprodev', 'pmprodev-email');
 
-	add_settings_field( 'cron-expire-memberships', __( 'Expire Memberships', 'pmpro-toolkit' ), 'pmprodev_settings_cron_expire_memberships', 'pmprodev', 'pmprodev-cron' );
-	add_settings_field( 'cron-expiration-warnings', __( 'Expiration Warnings', 'pmpro-toolkit' ), 'pmprodev_settings_cron_expiration_warnings', 'pmprodev', 'pmprodev-cron' );
-	add_settings_field( 'cron-credit-card-expiring', __( 'Credit Card Expirations', 'pmpro-toolkit' ), 'pmprodev_settings_cron_credit_card_expiring', 'pmprodev', 'pmprodev-cron' );
+	add_settings_field('cron-expire-memberships', 'Expire Memberships', 'pmprodev_settings_cron_expire_memberships', 'pmprodev', 'pmprodev-cron');
+	add_settings_field('cron-expiration-warnings', 'Expiration Warnings', 'pmprodev_settings_cron_expiration_warnings', 'pmprodev', 'pmprodev-cron');
+	add_settings_field('cron-credit-card-expiring', 'Credit Card Expirations', 'pmprodev_settings_cron_credit_card_expiring', 'pmprodev', 'pmprodev-cron');
 
-	add_settings_field( 'ipn-debug', __( 'Gateway Callback Debug Email', 'pmpro-toolkit' ), 'pmprodev_settings_ipn_debug', 'pmprodev', 'pmprodev-gateway' );
-	add_settings_field( 'checkout_debug_email', __( 'Send Checkout Debug Email', 'pmpro-toolkit' ), 'pmprodev_settings_checkout_debug_email', 'pmprodev', 'pmprodev-gateway' );
+	add_settings_field('ipn-debug', 'Gateway Callback Debug Email', 'pmprodev_settings_ipn_debug', 'pmprodev', 'pmprodev-gateway');
+    add_settings_field('checkout_debug_email', 'Send Checkout Debug Email', 'pmprodev_settings_checkout_debug_email', 'pmprodev', 'pmprodev-gateway');
 
-	add_settings_field( 'view_as_enabled', __( 'Enable \"View As\" feature', 'pmpro-toolkit' ), 'pmprodev_settings_view_as_enabled', 'pmprodev', 'pmprodev-view-as' );
+    add_settings_field('view_as_enabled', 'Enable "View As" feature', 'pmprodev_settings_view_as_enabled', 'pmprodev', 'pmprodev-view-as');
 }
 add_action('admin_init', 'pmprodev_admin_init');
 
 function pmprodev_settings_page() {
     require_once(plugin_dir_path(__FILE__) . '/adminpages/settings.php');
 }
-function pmpro_toolkit_load_textdomain() {
-	// get the locale
-	$locale = apply_filters( 'plugin_locale', get_locale(), 'pmpro-toolkit' );
-	$mofile = 'pmpro-toolkit-' . $locale . '.mo';
-
-	// paths to local (plugin) and global (WP) language files
-	$mofile_local  = plugin_dir_path( __FILE__ ) . '/languages/' . $mofile;
-	$mofile_global = WP_LANG_DIR . '/pmpro/' . $mofile;
-
-	// load global first
-	load_textdomain( 'pmpro-toolkit', $mofile_global );
-
-	// load local second
-	load_textdomain( 'pmpro-toolkit', $mofile_local );
-}
-add_action( 'init', 'pmpro_toolkit_load_textdomain', 1 );
-
-/*
-    Function to add links to the plugin row meta
-*/
-function pmprodev_plugin_row_meta($links, $file) {
-    if(strpos($file, 'pmpro-toolkit.php') !== false)
-    {
-        $new_links = array(
-            '<a href="' . esc_url('https://www.paidmembershipspro.com/add-ons/pmpro-toolkit/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
-            '<a href="' . esc_url('https://www.paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
-        );
-        $links = array_merge($links, $new_links);
-    }
-    return $links;
-}
-add_filter('plugin_row_meta', 'pmprodev_plugin_row_meta', 10, 2);
